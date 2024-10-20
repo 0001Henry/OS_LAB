@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define NUM_READERS 5  // 读者数量
+#define NUM_READERS 4  // 读者数量
 #define NUM_WRITERS 3  // 写者数量
 
 void action(){
@@ -19,7 +19,9 @@ int readercount = 0;  // 当前正在读取的读者数量
 
 void *reader(void *param) {
     int id = *((int*)param);
-    while (1) {
+    // int num = 1;
+    // while (num--) {
+    while(1){
         sem_wait(&rmutex);
         readercount++;
         if (readercount == 1) {
@@ -28,8 +30,9 @@ void *reader(void *param) {
         sem_post(&rmutex);
 
         // 执行读操作
-        printf("Reader %d is reading\n", id);
+        printf("Reader %d begins to read\n", id);
         action();  // 模拟读取过程
+        printf("Reader %d finishes.\n", id);
 
         sem_wait(&rmutex);
         readercount--;
@@ -47,8 +50,9 @@ void *writer(void *param) {
     while (1) {
         sem_wait(&wmutex);
 
-        printf("Writer %d is writing\n", id);
+        printf("Writer %d begins to write.\n", id);
         action();  // 模拟写操作
+        printf("Writer %d finishes.\n", id);
 
         sem_post(&wmutex);
         action();  // 模拟非活动时间

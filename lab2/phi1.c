@@ -63,8 +63,15 @@ int main() {
         pthread_create(&philosophers[i], NULL, philosophy, &philosopher_numbers[i]);
     }
 
-    for (int i = 0; i < N; i++) {
-        pthread_join(philosophers[i], NULL);
+    // 输入q结束
+    while (1) {
+        char c = getchar();
+        if (c == 'q') {
+            for (int i = 0; i < N; i++) {
+                pthread_cancel(philosophers[i]);
+            }
+            break;
+        }
     }
 
     return 0;
