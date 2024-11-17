@@ -17,6 +17,7 @@
 typedef struct Page {
     int block_id;       // 物理块号
     int access_mode;    // 访问模式（只读或读写）
+    int last_access_time;   // 最近访问时刻（用于LRU算法）
     int is_accessed;    // 访问位（0 或 1）
     int is_modified;    // 修改位（0 或 1）
 } Page;
