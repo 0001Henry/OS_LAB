@@ -199,7 +199,6 @@ void optimal_page_replacement(WorkingSet *working_set)
             }
             else
             {
-
                 int res = -1;
                 int tmp;
                 // 记录每个页面的在i时刻后的最早访问时刻
